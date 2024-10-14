@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule, Validators } from '@angular/forms';
 import {FormGroup, FormControl} from '@angular/forms';
 import { NgIf } from '@angular/common';
+import { RegisterService } from '../../services/register.service';
 import { Employee } from '../../model/employee.model';
-import { HttpClient } from '@angular/common/http';
+
 
 
 
@@ -16,7 +17,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class RegisterFormComponent implements OnInit {
 
-  constructor(){}
+  constructor(private registerSerice: RegisterService) {}
 
   public registerForm = new FormGroup({
     empName: new FormControl('', [Validators.required]),
@@ -32,7 +33,10 @@ export class RegisterFormComponent implements OnInit {
 
 
   onSubmit(){
-    console.log(this.registerForm.value)
+    const data = this.registerForm.value as Employee
+    this.registerSerice.registerEmployee(data).subscribe((res: any)=>{
+      console.log(res);
+    });
   }
 
 

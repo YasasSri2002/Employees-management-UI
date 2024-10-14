@@ -1,43 +1,64 @@
-<section>
+<section class=" mt-5 d-grid justify-content-center align-items-center">
     <div class="container">
-        <div class="row">
-            <div class="col-6">
-                <div class="mb-3">
-                    <label for="empName" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="empName" placeholder="Enter your name">
-                  </div>
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="empName" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="empName" placeholder="Enter your name" formControlName="empName">
+                        <div *ngIf="registerForm.get('empName')?.touched && registerForm.get('empName')?.invalid" class="text-danger">
+                            please fill the name
+                        </div>
+                      </div>
+                </div>
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="email" placeholder="name@example.com" formControlName="email">
+                        <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+                            <span *ngIf="registerForm.get('email')?.errors?.['required']" class="text-danger ">Email is required</span>
+                            <span *ngIf="registerForm.get('email')?.errors?.['email']" class="text-danger ">Email is worng</span>
+                          </div>
+                      </div>
+                </div>
             </div>
-            <div class="col-6">
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="email" placeholder="name@example.com">
-                  </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="age" class="form-label">Age</label>
+                        <input type="text" class="form-control" id="age" placeholder="Enter your age" formControlName="age">
+                        <div *ngIf="registerForm.get('age')?.touched && registerForm.get('age')?.invalid" class="text-danger">
+                            Please fill out the
+                        </div>
+                      </div>
+                </div>
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="contact" class="form-label">Contact</label>
+                        <input type="text" class="form-control" id="contact" placeholder="Enter your contact" formControlName="contact">
+                        <div *ngIf="registerForm.get('contact')?.invalid && registerForm.get('contact')?.touched">
+                            <span *ngIf="registerForm.get('contact')?.errors?.['required']" class="text-danger">Contact is required</span>
+                            <span *ngIf="registerForm.get('contact')?.errors?.['maxlength']" class="text-danger">Contact cannot exceed 10 characters</span>
+                            <span *ngIf="registerForm.get('contact')?.errors?.['minlength']" class="text-danger">Contact must be exactly 10 characters</span>
+                        </div>
+                      </div>
+                      </div>
+                </div>
+            
+            <div class="row">
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="salary" class="form-label">Salary</label>
+                        <input type="text" class="form-control" id="salary" placeholder="Enter your salary" formControlName="salary">
+                      </div>
+                      <div *ngIf="registerForm.get('salary')?.invalid && registerForm.get('salary')?.touched" class="text-danger">
+                        Please enter the salary
+                      </div>
+                </div>
+                <div class="col-6 mt-3 d-grid justify-content-center align-content-center">
+                    <button type="submit" class="btn btn-outline-primary rounded-4">Submit</button>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-6">
-                <div class="mb-3">
-                    <label for="age" class="form-label">Age</label>
-                    <input type="text" class="form-control" id="age" placeholder="Enter your age">
-                  </div>
-            </div>
-            <div class="col-6">
-                <div class="mb-3">
-                    <label for="contact" class="form-label">Contact</label>
-                    <input type="text" class="form-control" id="contact" placeholder="Enter your contact">
-                  </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-6">
-                <div class="mb-3">
-                    <label for="salary" class="form-label">Salary</label>
-                    <input type="text" class="form-control" id="salary" placeholder="Enter your salary">
-                  </div>
-            </div>
-            <div class="col-6">
-                <button class="btn btn-outline-primary rounded-4">Submit</button>
-            </div>
-        </div>
+        </form>
     </div>
 </section>

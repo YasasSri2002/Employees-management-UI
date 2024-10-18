@@ -4,6 +4,7 @@ import {FormGroup, FormControl} from '@angular/forms';
 import { NgIf } from '@angular/common';
 import { RegisterService } from '../../services/register.service';
 import { Employee } from '../../model/employee.model';
+import Swal from 'sweetalert2';
 
 
 
@@ -34,8 +35,16 @@ export class RegisterFormComponent implements OnInit {
 
   onSubmit(){
     const data = this.registerForm.value as Employee
-    this.registerSerice.registerEmployee(data).subscribe((res: any)=>{
+    this.registerSerice.registerEmployee(data).subscribe((res: Employee)=>{
       console.log(res);
+
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Your work has been saved",
+        showConfirmButton: false,
+        timer: 1500
+      });
     });
   }
 

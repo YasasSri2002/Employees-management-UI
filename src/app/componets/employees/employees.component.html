@@ -1,0 +1,171 @@
+<div
+    class="table-responsive"
+>
+    <table
+        class="table table-hover table-borderless table-primary align-middle"
+    >
+        <thead class="table-light">   
+            <tr>
+               <th>Id</th>
+               <th>Employee Name</th>
+               <th>Age</th>
+               <th>Email</th>
+               <th>Contact Number</th>
+               <th>Salary</th>
+               <th></th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            
+               @for (employee of employees; track employee.email) {
+                <tr class="table-primary">
+                    <td scope="row">{{employee.empId}}</td>
+                    <td>{{employee.empName}}</td>
+                    <td>{{employee.age}}</td>
+                    <td>{{employee.email}}</td>
+                    <td>{{employee.contact}}</td>
+                    <td>{{employee.salary}}</td>
+                    <td>
+                        <button class="btn btn-outline-danger rounded-4" 
+                        (click)="deleteEmployee(employee.empId)">
+                            <i class="bi bi-trash justify-content-center"></i>
+                        </button>
+                        <button class="btn btn-outline-primary rounded-4" data-bs-toggle="modal"
+                        data-bs-target="#modalId" (click)="onUpdate(employee)">
+                            <i class="bi bi-pencil-square justify-content-center"></i>
+                        </button>
+                    </td>
+                </tr>
+               }
+            
+        </tbody>
+        <tfoot>
+            
+        </tfoot>
+    </table>
+</div>
+
+<!-- Modal -->
+<div
+    class="modal fade"
+    id="modalId"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="modalTitleId"
+    aria-hidden="true"
+>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitleId">
+                    Modal title
+                </h5>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+            </div>
+            <div class="modal-body">
+               <form [formGroup]="updateForm">
+                <div class="row">
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="empId" class="form-label">ID</label>
+                            <input type="text" class="form-control" id="empId" placeholder="{{selectedEmployee.empId}}">
+                          </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="empName" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="empName" placeholder="{{selectedEmployee.empName}}"formControlName="empName">
+                          </div>
+                    </div>
+                </div>
+                </div>
+                <div class="row">
+                        <div class="col">
+                            <div class="mb-3">
+                                <label for="email" class="form-label">
+                                    Email address
+                                </label>
+                                <input 
+                                    type="email" 
+                                    class="form-control" 
+                                    id="email" 
+                                    placeholder="{{selectedEmployee.email}}"formControlName="email" 
+                                />
+                            </div>
+                </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="age" class="form-label">Age</label>
+                            <input type="text" class="form-control" id="age" placeholder="{{selectedEmployee.age}}" formControlName="age">
+                          </div>
+                    </div>
+                <div class="row">
+                        <div class="col">
+                            <div class="mb-3">
+                                <label for="contact" class="form-label">
+                                    Contact
+                                </label>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="contact" 
+                                    placeholder="{{selectedEmployee.contact}}"formControlName="contact"
+                                />
+                              </div>
+                              </div>
+                        </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="salary" class="form-label">Salary</label>
+                            <input type="text" class="form-control" id="salary" placeholder="{{selectedEmployee.salary}}" formControlName="salary">
+                          </div>
+                    </div>
+                   
+                </div>
+               </form>
+            </div>
+            <div class="modal-footer">
+               
+                <button 
+                    type="submit" 
+                    class="btn btn-outline-primary rounded-4"
+                    (click)="updateEmployee(selectedEmployee.empId, selectedEmployee)"
+                >
+                    Update
+                </button>
+                <button
+                    type="button"
+                    class="btn btn-secondary rounded-4"
+                    data-bs-dismiss="modal"
+                >
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var modalId = document.getElementById('modalId');
+
+    modalId.addEventListener('show.bs.modal', function (event) {
+          // Button that triggered the modal
+          let button = event.relatedTarget;
+          // Extract info from data-bs-* attributes
+          let recipient = button.getAttribute('data-bs-whatever');
+
+        // Use above variables to manipulate the DOM
+    });
+</script>
+

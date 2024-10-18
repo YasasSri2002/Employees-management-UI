@@ -14,6 +14,7 @@ import { NgIf } from '@angular/common';
 })
 export class EmployeesComponent implements OnInit {
 
+
   public employees: Employee[] = [];
 
   public selectedEmployee = {
@@ -25,14 +26,7 @@ export class EmployeesComponent implements OnInit {
     salary: ""
     }
 
-    public updateForm = new FormGroup({
-      empId: new FormControl(),
-      empName: new FormControl(''),
-      age: new FormControl(''),
-      contact: new FormControl(''),
-      email: new FormControl(''),
-      salary: new FormControl('')
-    })
+    
 
   
   constructor (private manageEmployee: ViewService){}
@@ -48,6 +42,14 @@ export class EmployeesComponent implements OnInit {
     })
   }
 
+  public updateForm = new FormGroup({
+    empId: new FormControl(),
+    empName: new FormControl(''),
+    age: new FormControl(''),
+    contact: new FormControl(''),
+    email: new FormControl(''),
+    salary: new FormControl('')
+  })
 
 
   public deleteEmployee(id: Number) {
@@ -83,16 +85,19 @@ export class EmployeesComponent implements OnInit {
   }
 
   public updateEmployee(selectedEmployee : Employee ){
+    this.viewEmployees();
+    const data = this.updateForm.value as Employee
+    console.log(data);
+    this.manageEmployee.update(data).subscribe((res)=>{
+      Swal.fire({
+        title: "Updated!",
+        text: "Employee has been Updated.",
+        icon: "success"
+      });
 
-    selectedEmployee.empId = id;
-
-    selectedEmployee = this.updateForm.valueChanges
-
-    this.manageEmployee.update(selectedEmployee).subscribe((data)=>{
-      
-      console.log(data);
-      
+      this.viewEmployees();
     })
+    
   }
 
   

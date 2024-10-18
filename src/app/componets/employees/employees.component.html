@@ -58,7 +58,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalTitleId">
-                    Modal title
+                    Update Email
                 </h5>
                 <button
                     type="button"
@@ -73,14 +73,14 @@
                     <div class="col">
                         <div class="mb-3">
                             <label for="empId" class="form-label">ID</label>
-                            <input type="text" class="form-control" id="empId" placeholder="{{selectedEmployee.empId}}">
+                            <input type="text" class="form-control" id="empId" formControlName="empId" value="{{selectedEmployee.empId}}">
                           </div>
                 </div>
                 <div class="row">
                     <div class="col">
                         <div class="mb-3">
                             <label for="empName" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="empName" placeholder="{{selectedEmployee.empName}}"formControlName="empName">
+                            <input type="text" class="form-control" id="empName" value="{{selectedEmployee.empName}}"formControlName="empName">
                           </div>
                     </div>
                 </div>
@@ -95,7 +95,7 @@
                                     type="email" 
                                     class="form-control" 
                                     id="email" 
-                                    placeholder="{{selectedEmployee.email}}"formControlName="email" 
+                                    value="{{selectedEmployee.email}}"formControlName="email" 
                                 />
                             </div>
                 </div>
@@ -104,7 +104,7 @@
                     <div class="col">
                         <div class="mb-3">
                             <label for="age" class="form-label">Age</label>
-                            <input type="text" class="form-control" id="age" placeholder="{{selectedEmployee.age}}" formControlName="age">
+                            <input type="text" class="form-control" id="age" value="{{selectedEmployee.age}}" formControlName="age">
                           </div>
                     </div>
                 <div class="row">
@@ -117,7 +117,7 @@
                                     type="text" 
                                     class="form-control" 
                                     id="contact" 
-                                    placeholder="{{selectedEmployee.contact}}"formControlName="contact"
+                                    value="{{selectedEmployee.contact}}"formControlName="contact"
                                 />
                               </div>
                               </div>
@@ -128,7 +128,7 @@
                     <div class="col">
                         <div class="mb-3">
                             <label for="salary" class="form-label">Salary</label>
-                            <input type="text" class="form-control" id="salary" placeholder="{{selectedEmployee.salary}}" formControlName="salary">
+                            <input type="text" class="form-control" id="salary" value="{{selectedEmployee.salary}}" formControlName="salary">
                           </div>
                     </div>
                    
@@ -140,7 +140,7 @@
                 <button 
                     type="submit" 
                     class="btn btn-outline-primary rounded-4"
-                    (click)="updateEmployee(selectedEmployee.empId, selectedEmployee)"
+                    (click)="updateEmployee(selectedEmployee)"
                 >
                     Update
                 </button>

@@ -2,19 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { Employee } from '../../model/employee.model';
 import { ViewService } from '../../services/view.service';
 import Swal from 'sweetalert2';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {  FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validator, Validators } from '@angular/forms';
 import { NgIf } from '@angular/common';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { bootstrapAppScopedEarlyEventContract } from '@angular/core/primitives/event-dispatch';
 
 @Component({
   selector: 'app-employees',
   standalone: true,
-  imports: [ReactiveFormsModule, NgIf],
+  imports: [ReactiveFormsModule, NgIf ],
   templateUrl: './employees.component.html',
   styleUrl: './employees.component.css'
 })
 export class EmployeesComponent implements OnInit {
 
-
+  
   public employees: Employee[] = [];
 
   public selectedEmployee = {
@@ -26,10 +28,22 @@ export class EmployeesComponent implements OnInit {
     salary: ""
     }
 
-    
+    public updateForm : FormGroup;
 
-  
-  constructor (private manageEmployee: ViewService){}
+  constructor (private manageEmployee: ViewService , private fb: FormBuilder){
+    this.updateForm =this.fb.group({
+      empId: [this.selectedEmployee?.empId || 0, [Validators.required]],
+      empName: [this.selectedEmployee?.empName || '', [Validators.required]],
+      email: [this.selectedEmployee?.email || '', [Validators.required, Validators.email]],
+      age: [this.selectedEmployee?.age || '', [Validators.required]],
+      contact: [this.selectedEmployee?.contact || '', [Validators.required]],
+      salary: [this.selectedEmployee?.salary || '', [Validators.required]],
+    })
+  }
+
+  public clearForm(){
+    this.updateForm.reset();
+  }
  
   ngOnInit(): void {
    this.viewEmployees();
@@ -42,14 +56,8 @@ export class EmployeesComponent implements OnInit {
     })
   }
 
-  public updateForm = new FormGroup({
-    empId: new FormControl(),
-    empName: new FormControl(''),
-    age: new FormControl(''),
-    contact: new FormControl(''),
-    email: new FormControl(''),
-    salary: new FormControl('')
-  })
+ 
+  
 
 
   public deleteEmployee(id: Number) {
@@ -80,23 +88,45 @@ export class EmployeesComponent implements OnInit {
 
   }
 
+
   public onUpdate(employee :Employee){
     this.selectedEmployee = employee;
+    this.updateForm.patchValue({
+      empId: employee.empId,
+      empName: employee.empName,
+      email: employee.email,
+      age: employee.age,
+      contact: employee.contact,
+      salary: employee.salary
+  })
   }
 
-  public updateEmployee(selectedEmployee : Employee ){
-    this.viewEmployees();
-    const data = this.updateForm.value as Employee
-    console.log(data);
-    this.manageEmployee.update(data).subscribe((res)=>{
-      Swal.fire({
-        title: "Updated!",
-        text: "Employee has been Updated.",
-        icon: "success"
-      });
+  
 
-      this.viewEmployees();
-    })
+
+  public updateEmployee(id : Number , selectedEmployee : Employee){
+    selectedEmployee = this.updateForm.value as Employee
+    if(this.updateForm.invalid){
+      Swal.fire({
+        title:"Update",
+        text: "Some Field are empty",
+        icon:"error"
+      })
+      
+    }else{
+      this.manageEmployee.update(id,selectedEmployee).subscribe((res)=>{
+        console.log(res);
+        this.clearForm();
+
+        Swal.fire({
+          title: "Updated",
+          text: "Employee has been Updated",
+          icon: "success",
+        });
+        this.viewEmployees();
+      })
+      
+    }
     
   }
 

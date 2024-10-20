@@ -32,20 +32,38 @@ export class RegisterFormComponent implements OnInit {
     
   }
 
+  public clearForm(){
+    this.registerForm.reset();
+  }
+
 
   onSubmit(){
     const data = this.registerForm.value as Employee
-    this.registerSerice.registerEmployee(data).subscribe((res: Employee)=>{
-      console.log(res);
-
+    if(this.registerForm!){
       Swal.fire({
         position: "center",
-        icon: "success",
-        title: "Your work has been saved",
-        showConfirmButton: false,
+        icon: "error",
+        title: "Please try again",
+        showConfirmButton: true,
         timer: 1500
       });
-    });
+    }else{
+      this.registerSerice.registerEmployee(data).subscribe((res: Employee)=>{
+        console.log(res);
+  
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Employee Registered Compeleted",
+          showConfirmButton: false,
+          timer: 1500
+        });
+        this.clearForm()
+      });
+    }
+   
+
+
   }
 
 

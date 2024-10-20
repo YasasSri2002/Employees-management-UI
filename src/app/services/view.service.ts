@@ -20,8 +20,8 @@ export class ViewService {
     return this.http.delete(this.apiUrl+`/by-id?empId=${id}`);
   }
 
-  public update(updateEmpoyee : Employee):Observable<Employee>{
-    return this.http.put<Employee>(this.apiUrl+'/update', updateEmpoyee);
+  public update(id: Number, updateEmpoyee : Employee):Observable<Employee>{
+    return this.http.put<Employee>(this.apiUrl+`/update/${id}`, updateEmpoyee);
   }
 
 }

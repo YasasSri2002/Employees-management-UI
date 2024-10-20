@@ -73,14 +73,14 @@
                     <div class="col">
                         <div class="mb-3">
                             <label for="empId" class="form-label">ID</label>
-                            <input type="text" class="form-control" id="empId" formControlName="empId" value="{{selectedEmployee.empId}}">
+                            <input type="text" class="form-control" id="empId" formControlName="empId" >
                           </div>
                 </div>
                 <div class="row">
                     <div class="col">
                         <div class="mb-3">
                             <label for="empName" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="empName" value="{{selectedEmployee.empName}}"formControlName="empName">
+                            <input type="text" class="form-control" id="empName" formControlName="empName"  >
                           </div>
                     </div>
                 </div>
@@ -95,7 +95,7 @@
                                     type="email" 
                                     class="form-control" 
                                     id="email" 
-                                    value="{{selectedEmployee.email}}"formControlName="email" 
+                                    formControlName="email" 
                                 />
                             </div>
                 </div>
@@ -104,7 +104,7 @@
                     <div class="col">
                         <div class="mb-3">
                             <label for="age" class="form-label">Age</label>
-                            <input type="text" class="form-control" id="age" value="{{selectedEmployee.age}}" formControlName="age">
+                            <input type="text" class="form-control" id="age" formControlName="age" >
                           </div>
                     </div>
                 <div class="row">
@@ -117,7 +117,8 @@
                                     type="text" 
                                     class="form-control" 
                                     id="contact" 
-                                    value="{{selectedEmployee.contact}}"formControlName="contact"
+                                    
+                                    formControlName="contact" 
                                 />
                               </div>
                               </div>
@@ -128,7 +129,7 @@
                     <div class="col">
                         <div class="mb-3">
                             <label for="salary" class="form-label">Salary</label>
-                            <input type="text" class="form-control" id="salary" value="{{selectedEmployee.salary}}" formControlName="salary">
+                            <input type="text" class="form-control" id="salary" formControlName="salary">
                           </div>
                     </div>
                    
@@ -140,7 +141,8 @@
                 <button 
                     type="submit" 
                     class="btn btn-outline-primary rounded-4"
-                    (click)="updateEmployee(selectedEmployee)"
+                    (click)="updateEmployee(selectedEmployee.empId, selectedEmployee)"
+                    data-bs-dismiss="modal"
                 >
                     Update
                 </button>
@@ -148,6 +150,7 @@
                     type="button"
                     class="btn btn-secondary rounded-4"
                     data-bs-dismiss="modal"
+                    id = "closeModal"
                 >
                     Close
                 </button>

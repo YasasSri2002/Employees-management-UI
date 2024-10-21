@@ -5,6 +5,11 @@ import { NgIf } from '@angular/common';
 import { RegisterService } from '../../services/register.service';
 import { Employee } from '../../model/employee.model';
 import Swal from 'sweetalert2';
+import { ViewService } from '../../services/view.service';
+import { ErrorResponse } from '../../model/errorResponse.model';
+
+
+
 
 
 
@@ -12,13 +17,15 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-register-form',
   standalone: true,
-  imports: [ReactiveFormsModule , NgIf  ],
+  imports: [ReactiveFormsModule , NgIf],
   templateUrl: './register-form.component.html',
   styleUrl: './register-form.component.css'
 })
 export class RegisterFormComponent implements OnInit {
 
-  constructor(private registerSerice: RegisterService) {}
+
+  constructor(private registerService: RegisterService, private manageEmployee: ViewService) {}
+
 
   public registerForm = new FormGroup({
     empName: new FormControl('', [Validators.required]),
@@ -31,40 +38,46 @@ export class RegisterFormComponent implements OnInit {
   ngOnInit(): void {
     
   }
+  
 
   public clearForm(){
     this.registerForm.reset();
   }
 
 
-  onSubmit(){
-    const data = this.registerForm.value as Employee
-    if(this.registerForm!){
+  onSubmit() {
+    if (this.registerForm.invalid) {
       Swal.fire({
-        position: "center",
-        icon: "error",
-        title: "Please try again",
+        position: 'center',
+        icon: 'error',
+        title: 'Please fill out all required fields correctly.',
         showConfirmButton: true,
-        timer: 1500
+        timer: 1500,
       });
-    }else{
-      this.registerSerice.registerEmployee(data).subscribe((res: Employee)=>{
-        console.log(res);
-  
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Employee Registered Compeleted",
-          showConfirmButton: false,
-          timer: 1500
-        });
-        this.clearForm()
-      });
+      return;
     }
-   
 
+    const value = this.registerForm.value as Employee;
 
+    this.registerService.registerEmployee(value).subscribe({
+      next: (data: any) => {
+        console.log(data);
+        Swal.fire({
+          icon: 'success',
+          title: 'Registered',
+          showConfirmButton: true,
+        });
+      },
+      error: (err: any) => {
+        console.log(err.status);
+        Swal.fire({
+          icon: 'error',
+          title: 'Registration Failed',
+          text: err.message, // This will display the error message from the backend
+          showConfirmButton: true,
+        });
+      },
+    });
   }
-
 
 }
